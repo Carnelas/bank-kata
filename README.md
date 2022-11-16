@@ -1,8 +1,8 @@
-# Account
+# Bank
 
 ## Objetive
 
-Create a bank account app that do these three functions
+Create a bank bank app that do these three functions
 
 *-* deposit( amount int )
 
