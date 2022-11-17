@@ -48,13 +48,12 @@ defmodule AccountTest do
   end
 
   test "deposit shows in the balance" do
-
     statement = "Date || Amount || Balance
     _ || 1000 || 1000"
 
     Account.addDeposit(1000)
 
     assert capture_io(fn -> Account.printStatement() end) ==
-      statement <> "\n"
+             statement <> "\n"
   end
 end
