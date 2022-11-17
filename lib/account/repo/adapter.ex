@@ -1,28 +1,31 @@
 defmodule Account.Repo.Adapter do
-  def buildNewOperation(amount) do
-    operationList = fetchOperations()
-    balance = getBalance(operationList) + amount
+  alias __MODULE__.MockedDb
 
-    operationList ++ [{amount, balance}]
+  def buildNewOperation(amount) do
+    operationsList = fetchOperations()
+    balance = getBalance(operationsList) + amount
+
+    operationsList ++ [{amount, balance}]
   end
 
   def fetchOperations() do
-    operationsListExists = :ets.whereis(:operations)
-    [{_, operationList}] = getOperations(operationsListExists)
-    operationList
+    MockedDb.operationsListExist()
+    |> getOperations()
   end
 
   def insert(newOperation) do
-    :ets.insert(:operations, {"list", newOperation})
+    MockedDb.insert(newOperation)
   end
 
   defp getOperations(exists) when exists == :undefined do
-    createTable()
-    :ets.lookup(:operations, "list")
+    MockedDb.createTable()
+    [{_, operationsList}] = MockedDb.searchOperationsList()
+    operationsList
   end
 
   defp getOperations(_exist) do
-    :ets.lookup(:operations, "list")
+    [{_, operationsList}] = MockedDb.searchOperationsList()
+    operationsList
   end
 
   defp getBalance(list) do
@@ -35,12 +38,8 @@ defmodule Account.Repo.Adapter do
         balance
     end
   end
-
-  defp createTable() do
-    :ets.new(:operations, [:set, :named_table])
-    :ets.insert(:operations, {"list", []})
-  end
 end
 
-#   defp adapter, do: Application.get_env(:account, :acount)[:adapter]
-# evey function will do something like adapter().addDeposit(amount)
+# ToDo
+# defp adapter, do: Application.get_env(:account, :acount)[:database]
+# every function will do something like database().new(amount)

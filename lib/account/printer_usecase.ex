@@ -1,4 +1,4 @@
-defmodule PrinterUsecase do
+defmodule Account.PrinterUsecase do
   alias Account.Repo
 
   def printStatement() do

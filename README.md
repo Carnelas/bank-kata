@@ -22,3 +22,12 @@ Date       || Amount || Balance
 14/01/2012 || -500   || 2500
 13/01/2012 || 2000   || 3000
 10/01/2012 || 1000   || 1000
+
+## ToDo List
+
+- [] Improve the implementation of Date.
+    -> Right now we are not storing the Date so we are printing the date of the print instead of the date of the operation.
+    -> How? 
+
+- [] Make a switch so it will use the MockedDB in test envs and a real one (no implemented) in prod
+- [] 

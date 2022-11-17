@@ -1,4 +1,4 @@
-defmodule DepositUsecase do
+defmodule Account.DepositUsecase do
   alias Account.Repo
 
   def addDeposit(amount) do
