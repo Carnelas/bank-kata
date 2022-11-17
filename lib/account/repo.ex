@@ -6,6 +6,11 @@ defmodule Account.Repo do
     |> Adapter.insert()
   end
 
+  def withdrawDeposit(amount) do
+    Adapter.buildNewOperation(amount)
+    |> Adapter.insert()
+  end
+
   def fetchOperations() do
     Adapter.fetchOperations()
   end

@@ -7,8 +7,8 @@ defmodule Account.Repo.Adapter do
   end
 
   def fetchOperations() do
-    operationExists = :ets.whereis(:operations)
-    [{_, operationList}] = getOperations(operationExists)
+    operationsListExists = :ets.whereis(:operations)
+    [{_, operationList}] = getOperations(operationsListExists)
     operationList
   end
 
@@ -41,3 +41,6 @@ defmodule Account.Repo.Adapter do
     :ets.insert(:operations, {"list", []})
   end
 end
+
+#   defp adapter, do: Application.get_env(:account, :acount)[:adapter]
+# evey function will do something like adapter().addDeposit(amount)

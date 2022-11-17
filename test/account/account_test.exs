@@ -15,16 +15,18 @@ defmodule AccountTest do
 
   # acceptance test
   test "print whole statement with transactions" do
-    printed_statement = "Date || Amount || Balance
-    14/01/2012 || -500 || 2500
-    13/01/2012 || 2000 || 3000
-    10/01/2012 || 1000 || 1000"
+    date = get_date()
+
+    printed_statement = """
+    Date || Amount || Balance
+    #{date} || -500 || 2500
+    #{date} || 2000 || 3000
+    #{date} || 1000 || 1000
+    """
 
     Account.addDeposit(1000)
-    Account.withdrawDeposit(100)
-    Account.addDeposit(500)
-
-    Account.printStatement()
+    Account.addDeposit(2000)
+    Account.withdrawDeposit(500)
 
     assert String.trim(capture_io(fn -> Account.printStatement() end)) ==
              String.trim(printed_statement)
@@ -40,7 +42,7 @@ defmodule AccountTest do
   end
 
   test "can withdraw" do
-    amount = -100
+    amount = 100
 
     result = Account.withdrawDeposit(amount)
 
@@ -59,14 +61,14 @@ defmodule AccountTest do
 
     statement = """
     Date || Amount || Balance
-    #{date} || 1000 || 1000
+    #{date} || 2000 || 8000
     #{date} || 5000 || 6000
-    #{date} || 10000 || 16000
+    #{date} || 1000 || 1000
     """
 
     Account.addDeposit(1000)
     Account.addDeposit(5000)
-    Account.addDeposit(10000)
+    Account.addDeposit(2000)
 
     assert String.trim(capture_io(fn -> Account.printStatement() end)) ==
              String.trim(statement)

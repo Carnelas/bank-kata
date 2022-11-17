@@ -5,6 +5,7 @@ defmodule PrinterUsecase do
     buildTitle() |> IO.puts()
 
     Repo.fetchOperations()
+    |> Enum.reverse()
     |> Enum.each(fn row -> printRow(row) end)
   end
 
