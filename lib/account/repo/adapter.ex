@@ -1,11 +1,10 @@
 defmodule Account.Repo.Adapter do
   alias __MODULE__.MockedDb
 
-  def buildNewOperation(amount) do
+  def buildNewOperation(date, amount) do
     operationsList = fetchOperations()
     balance = getBalance(operationsList) + amount
-
-    operationsList ++ [{amount, balance}]
+    operationsList ++ [{date, amount, balance}]
   end
 
   def fetchOperations() do
@@ -19,13 +18,11 @@ defmodule Account.Repo.Adapter do
 
   defp getOperations(exists) when exists == :undefined do
     MockedDb.createTable()
-    [{_, operationsList}] = MockedDb.searchOperationsList()
-    operationsList
+    MockedDb.searchOperationsList()
   end
 
   defp getOperations(_exist) do
-    [{_, operationsList}] = MockedDb.searchOperationsList()
-    operationsList
+    MockedDb.searchOperationsList()
   end
 
   defp getBalance(list) do
@@ -34,7 +31,7 @@ defmodule Account.Repo.Adapter do
         0
 
       list ->
-        {_amount, balance} = List.last(list)
+        {_date, _amount, balance} = List.last(list)
         balance
     end
   end
@@ -42,4 +39,4 @@ end
 
 # ToDo
 # defp adapter, do: Application.get_env(:account, :acount)[:database]
-# every function will do something like database().new(amount)
+# every function will be something like database().new(amount)

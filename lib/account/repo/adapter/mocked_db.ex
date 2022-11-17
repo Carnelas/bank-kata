@@ -13,6 +13,7 @@ defmodule Account.Repo.Adapter.MockedDb do
   end
 
   def searchOperationsList() do
-    :ets.lookup(:operations, "list")
+    [{_, operationsList}] = :ets.lookup(:operations, "list")
+    operationsList
   end
 end

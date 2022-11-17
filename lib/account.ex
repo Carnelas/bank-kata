@@ -2,7 +2,7 @@ defmodule Account do
   @moduledoc """
   Keeps the contexts that define the account
   """
-alias Account.{PrinterUsecase, DepositUsecase}
+  alias Account.{PrinterUsecase, DepositUsecase}
 
   @spec addDeposit(number) :: true
   def addDeposit(amount) do

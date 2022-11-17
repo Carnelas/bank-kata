@@ -13,12 +13,7 @@ defmodule Account.PrinterUsecase do
     "Date || Amount || Balance"
   end
 
-  defp printRow({amount, balance}) do
-    date = get_date()
+  defp printRow({date, amount, balance}) do
     String.trim("#{date} || #{amount} || #{balance}") |> IO.puts()
-  end
-
-  defp get_date() do
-    DateTime.to_date(DateTime.utc_now()) |> to_string()
   end
 end

@@ -1,13 +1,13 @@
 defmodule Account.Repo do
   alias __MODULE__.Adapter
 
-  def addDeposit(amount) do
-    Adapter.buildNewOperation(amount)
+  def addDeposit(date, amount) do
+    Adapter.buildNewOperation(date, amount)
     |> Adapter.insert()
   end
 
-  def withdrawDeposit(amount) do
-    Adapter.buildNewOperation(amount)
+  def withdrawDeposit(date, amount) do
+    Adapter.buildNewOperation(date, amount)
     |> Adapter.insert()
   end
 
