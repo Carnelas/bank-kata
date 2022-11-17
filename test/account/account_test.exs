@@ -26,8 +26,8 @@ defmodule AccountTest do
 
     Account.printStatement()
 
-    assert capture_io(fn -> Account.printStatement() end) ==
-             printed_statement <> "\n"
+    assert String.trim(capture_io(fn -> Account.printStatement() end)) ==
+             String.trim(printed_statement)
   end
 
   # unit test
@@ -42,17 +42,23 @@ defmodule AccountTest do
   test "can print statement" do
     statement = "Date || Amount || Balance"
 
-    assert capture_io(fn -> Account.printStatement() end) ==
-             statement <> "\n"
+    assert String.trim(capture_io(fn -> Account.printStatement() end)) ==
+             String.trim(statement)
   end
 
   test "deposit shows in the balance" do
-    statement = "Date || Amount || Balance
-    _ || 1000 || 1000"
+    statement = """
+    Date || Amount || Balance
+    _ || 1000 || 1000
+    _ || 5000 || 6000
+    _ || 10000 || 16000
+    """
 
     Account.addDeposit(1000)
+    Account.addDeposit(5000)
+    Account.addDeposit(10000)
 
-    assert capture_io(fn -> Account.printStatement() end) ==
-             statement <> "\n"
+    assert String.trim(capture_io(fn -> Account.printStatement() end)) ==
+      String.trim(statement)
   end
 end
