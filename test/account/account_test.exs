@@ -31,13 +31,12 @@ defmodule AccountTest do
   end
 
   # unit test
-
   test "can_deposit" do
     amount = 10
 
     result = Account.addDeposit(amount)
 
-    assert result == :ok
+    assert result == true
   end
 
   test "can print statement" do

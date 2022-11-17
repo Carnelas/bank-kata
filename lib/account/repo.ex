@@ -2,22 +2,42 @@ defmodule Account.Repo do
   @type operations :: list()
 
   def addDeposit(amount) do
-    balance = getBalance()
-    balance = balance + amount
-    :ets.insert(:operations, {"_", amount, balance})
+
+    operationExists = :ets.whereis(:operations)
+
+    [{_, operationList}] = getOperations(operationExists)
+    balance = getBalance(operationList)
+    newOperation = {amount, balance}
+    operationList = operationList ++ newOperation
+
+    :ets.insert(:operations, {"list", operationList})
   end
 
-  defp getBalance() do
-    case getLastOperation() do
-      :operations -> 0
-      key -> :ets.lookup(:operations, key)
+  defp getBalance(list) do
+
+    case list do
+      [] ->
+        0
+
+      list ->
+        {_amount, balance} = List.last(list)
+        balance
     end
   end
 
-  defp getLastOperation() do
-    case :ets.whereis(:operations) do
-      :undefined -> :ets.new(:operations, [:set, :public, :named_table])
-      _ -> :ets.last(:operations)
-    end
+  defp getOperations(exists) when exists == :undefined do
+
+    createTable()
+    :ets.lookup(:operations, "list")
+  end
+
+  defp getOperations(_exist) do
+
+    :ets.lookup(:operations, "list")
+  end
+
+  defp createTable() do
+    :ets.new(:operations, [:set, :named_table])
+    :ets.insert(:operations, {"list", []})
   end
 end

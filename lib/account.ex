@@ -5,7 +5,8 @@ defmodule Account do
 
   @spec addDeposit(non_neg_integer()) :: :ok
   def addDeposit(amount) do
-    :ok
+    response = Account.Repo.addDeposit(amount)
+
   end
 
   def printStatement() do
