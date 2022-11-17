@@ -11,7 +11,6 @@ defmodule AccountTest do
   alias Account
   # alias Account.Repo.Adapter.Mock, as: AccountMock
 
-
   setup :verify_on_exit!
 
   # acceptance test
@@ -39,6 +38,12 @@ defmodule AccountTest do
     result = Account.addDeposit(amount)
 
     assert result == :ok
+  end
 
+  test "can print statement" do
+    statement = "Date || Amount || Balance"
+
+    assert capture_io(fn -> Account.printStatement() end) ==
+             statement <> "\n"
   end
 end
