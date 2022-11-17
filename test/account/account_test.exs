@@ -1,16 +1,16 @@
-defmodule Bank.AccountTest do
+defmodule AccountTest do
   @moduledoc """
   Account test suite
   """
 
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   import Mox
   import ExUnit.CaptureIO
 
-  alias Bank.Account
-  alias Bank.Account.Repo.Adapter.Mock, as: AccountMock
-  alias Bank.Account.Transaction
+  alias Account
+  # alias Account.Repo.Adapter.Mock, as: AccountMock
+
 
   setup :verify_on_exit!
 
@@ -33,15 +33,12 @@ defmodule Bank.AccountTest do
 
   # unit test
 
-  test "addDeposit_add_a_transaction" do
-    transaction = %Transaction{
-      date: "10/01/2012",
-      money: 1000,
-      balance: 1000
-    }
+  test "can_deposit" do
+    amount = 10
 
-    expect(AccountMock, :addDeposit, fn 1000 -> {:ok, transaction} end)
+    result = Account.addDeposit(amount)
 
-    assert {:ok, transaction} == Account.addDeposit(1000)
+    assert result == :ok
+
   end
 end

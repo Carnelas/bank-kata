@@ -1,1 +1,3 @@
-config :bank, :account, adapter: Bank.Account.Repo.Adapter.Mock
+use Mix.Config
+
+config :account, :account, adapter: Account.Account.Repo.Adapter.Mock
