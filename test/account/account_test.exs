@@ -14,7 +14,7 @@ defmodule AccountTest do
   setup :verify_on_exit!
 
   # acceptance test
-  test "print_statement_with_transactions" do
+  test "print whole statement with transactions" do
     printed_statement = "Date || Amount || Balance
     14/01/2012 || -500 || 2500
     13/01/2012 || 2000 || 3000
@@ -31,7 +31,7 @@ defmodule AccountTest do
   end
 
   # unit test
-  test "can_deposit" do
+  test "can deposit" do
     amount = 10
 
     result = Account.addDeposit(amount)
@@ -47,11 +47,13 @@ defmodule AccountTest do
   end
 
   test "deposit shows in the balance" do
+    date = get_date()
+
     statement = """
     Date || Amount || Balance
-    _ || 1000 || 1000
-    _ || 5000 || 6000
-    _ || 10000 || 16000
+    #{date} || 1000 || 1000
+    #{date} || 5000 || 6000
+    #{date} || 10000 || 16000
     """
 
     Account.addDeposit(1000)
@@ -59,6 +61,10 @@ defmodule AccountTest do
     Account.addDeposit(10000)
 
     assert String.trim(capture_io(fn -> Account.printStatement() end)) ==
-      String.trim(statement)
+             String.trim(statement)
+  end
+
+  defp get_date() do
+    DateTime.to_date(DateTime.utc_now()) |> to_string()
   end
 end
