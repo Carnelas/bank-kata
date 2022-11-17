@@ -21,7 +21,7 @@ defmodule AccountTest do
     10/01/2012 || 1000 || 1000"
 
     Account.addDeposit(1000)
-    Account.withdraw(100)
+    Account.withdrawDeposit(100)
     Account.addDeposit(500)
 
     Account.printStatement()
@@ -35,6 +35,14 @@ defmodule AccountTest do
     amount = 10
 
     result = Account.addDeposit(amount)
+
+    assert result == true
+  end
+
+  test "can withdraw" do
+    amount = -100
+
+    result = Account.withdrawDeposit(amount)
 
     assert result == true
   end
